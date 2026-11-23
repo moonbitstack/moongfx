@@ -1,0 +1,9 @@
+// Draws a few shapes into a frame buffer and reports what landed there.
+pkgtype(kind: "executable")
+
+import {
+  "moonbitstack/moongfx",
+  "moonbitstack/moongfx/soft",
+  "moonbitstack/moonmath",
+  "moonbitstack/moonrgba",
+}

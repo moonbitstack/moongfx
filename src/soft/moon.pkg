@@ -1,0 +1,13 @@
+// The software backend: triangles and masks into an RGBA frame buffer. It is
+// what the headless mode of anything built on this library draws into, and what
+// the reference images are made with.
+import {
+  "moonbitstack/moongfx",
+  "moonbitstack/moonimage",
+  "moonbitstack/moonmath",
+}
+
+// The tests name colours directly; the backend itself takes them from the core.
+import {
+  "moonbitstack/moonrgba",
+} for "test"

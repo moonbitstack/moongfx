@@ -1,0 +1,30 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "moonbitstack/moongfx/soft"
+
+import {
+  "moonbitstack/moongfx",
+  "moonbitstack/moonimage/raster",
+  "moonbitstack/moonrgba",
+}
+
+// Values
+
+// Errors
+
+// Types and methods
+pub struct Surface {
+  width : Int32
+  height : Int32
+  pixels : Array[Byte]
+  clips : Array[@moongfx.Mask]
+}
+pub fn Surface::height(Self) -> Int32
+pub fn Surface::new(Int32, Int32) -> Self
+pub fn Surface::pixel(Self, Int32, Int32) -> (Float, Float, Float, Float)
+pub fn Surface::to_image(Self) -> @raster.Image
+pub fn Surface::width(Self) -> Int32
+pub impl @moongfx.Backend for Surface
+
+// Type aliases
+
+// Traits

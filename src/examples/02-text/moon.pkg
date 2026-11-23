@@ -1,0 +1,9 @@
+// Draws a run of text through the glyph atlas and reports what it drew.
+pkgtype(kind: "executable")
+
+import {
+  "moonbitstack/moongfx",
+  "moonbitstack/moongfx/soft",
+  "moonbitstack/moonmath",
+  "moonbitstack/moonrgba",
+}

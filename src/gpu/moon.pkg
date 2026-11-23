@@ -1,0 +1,8 @@
+// The contract a GPU backend implements. Nothing here talks to a device: it is
+// the shapes a backend uploads — vertices, index ranges and draw calls — so that
+// the first GPU backend to arrive has nothing left to decide.
+import {
+  "moonbitstack/moongfx",
+  "moonbitstack/moonmath",
+  "moonbitstack/moonrgba",
+}

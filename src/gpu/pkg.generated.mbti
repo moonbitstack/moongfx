@@ -1,0 +1,64 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "moonbitstack/moongfx/gpu"
+
+import {
+  "moonbitlang/core/debug",
+  "moonbitstack/moongfx",
+  "moonbitstack/moonmath",
+}
+
+// Values
+
+// Errors
+
+// Types and methods
+#derive(@debug.Debug)
+pub(all) struct Batch {
+  vertices : Array[Vertex]
+  indices : Array[Int32]
+  draws : Array[DrawCall]
+}
+pub fn Batch::draw_count(Self) -> Int32
+pub fn Batch::is_empty(Self) -> Bool
+pub fn Batch::new() -> Self
+pub fn Batch::triangle_count(Self) -> Int32
+
+pub struct BatchBuilder {
+  vertices : Array[Vertex]
+  indices : Array[Int32]
+  draws : Array[DrawCall]
+  mut clip : Int32
+}
+pub fn BatchBuilder::build(Self) -> Batch
+pub fn BatchBuilder::fill(Self, Array[@moongfx.Triangle], @moongfx.Paint) -> Unit
+pub fn BatchBuilder::image_quad(Self, @moongfx.Quad, Int32, Int32, Int32) -> Unit
+pub fn BatchBuilder::mask_quad(Self, @moongfx.Bounds, @moongfx.Quad, @moongfx.Paint, Int32) -> Unit
+pub fn BatchBuilder::new() -> Self
+pub fn BatchBuilder::set_clip(Self, Int32) -> Unit
+
+#derive(@debug.Debug)
+pub(all) struct DrawCall {
+  first : Int32
+  count : Int32
+  paint : @moongfx.Paint
+  texture : Texture
+  clip : Int32
+}
+
+#derive(Eq, @debug.Debug)
+pub(all) enum Texture {
+  None
+  Coverage(Int32)
+  Colour(Int32)
+}
+
+#derive(Eq, @debug.Debug)
+pub(all) struct Vertex {
+  position : @moonmath.Vec2
+  texcoord : @moonmath.Vec2
+}
+
+// Type aliases
+pub using @moonmath {type Vec2}
+
+// Traits

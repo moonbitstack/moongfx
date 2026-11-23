@@ -1,0 +1,7 @@
+// Tessellates a self-crossing star under both fill rules and a stroked path.
+pkgtype(kind: "executable")
+
+import {
+  "moonbitstack/moongfx",
+  "moonbitstack/moonmath",
+}

@@ -7,3 +7,8 @@ target/
 
 # Examples are read in the repository and run in CI; they do not ship.
 src/examples/
+
+# The conformance module compares against reference images; it is not part of
+# what a user of the library downloads.
+integration/
+scripts/refs/target/

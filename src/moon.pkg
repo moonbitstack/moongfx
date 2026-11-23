@@ -1,2 +1,12 @@
-// What this package implements, and a first-hand link to the specification it
-// implements. A package without that link is not finished.
+// The drawing contract: paths, fills, strokes, paints, clipping, glyphs, and the
+// backend every rasteriser implements. The geometry follows the SVG path and
+// basic-shape specification (https://www.w3.org/TR/SVG2/paths.html, §8 and §9),
+// the stroke model follows its painting chapter (https://www.w3.org/TR/SVG2/painting.html, §13).
+import {
+  "moonbitlang/core/debug",
+  "moonbitlang/core/float",
+  "moonbitlang/core/math",
+  "moonbitstack/moonimage",
+  "moonbitstack/moonmath",
+  "moonbitstack/moonrgba",
+}

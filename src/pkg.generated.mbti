@@ -1,13 +1,413 @@
 // Generated using `moon info`, DON'T EDIT IT
-package "moonbitstack/CHANGE-ME"
+package "moonbitstack/moongfx"
+
+import {
+  "moonbitlang/core/debug",
+  "moonbitstack/moonimage/raster",
+  "moonbitstack/moonmath",
+  "moonbitstack/moonrgba",
+}
 
 // Values
-pub fn greet(StringView) -> String
+pub let coarse : Flatten
+
+pub fn cross(@moonmath.Vec2, @moonmath.Vec2) -> Float
+
+pub fn distance_to_segment_squared(@moonmath.Vec2, @moonmath.Vec2, @moonmath.Vec2) -> Float
+
+pub fn dot(@moonmath.Vec2, @moonmath.Vec2) -> Float
+
+pub fn fill(Path, rule? : FillRule, flatten? : Flatten) -> Array[Triangle]
+
+pub fn fill_contours(Array[Contour], FillRule) -> Array[Triangle]
+
+pub let fine : Flatten
+
+pub fn lerp(@moonmath.Vec2, @moonmath.Vec2, Float) -> @moonmath.Vec2
+
+pub fn linear(@moonmath.Vec2, @moonmath.Vec2, Gradient) -> Paint
+
+pub fn measure_text(GlyphCache, StringView, Float) -> Float
+
+pub fn mix(@moonrgba.Color, @moonrgba.Color, Float) -> @moonrgba.Color
+
+pub fn off_line(@moonmath.Vec2, @moonmath.Vec2, @moonmath.Vec2, Float) -> Bool
+
+pub fn radial(@moonmath.Vec2, Float, Gradient, focus? : @moonmath.Vec2, space? : @moonmath.Affine2) -> Paint
+
+pub fn rasterize(Array[Triangle], Int32, Int32) -> Mask
+
+pub fn solid(@moonrgba.Color) -> Paint
+
+pub let standard : Flatten
+
+pub fn stroke(Path, Stroke, flatten? : Flatten) -> Array[Triangle]
 
 // Errors
 
 // Types and methods
+#derive(Eq, @debug.Debug)
+pub(all) struct Arc {
+  centre : @moonmath.Vec2
+  radius : Float
+  start : Float
+  sweep : Float
+}
+pub fn Arc::end_point(Self) -> @moonmath.Vec2
+pub fn Arc::point_at(Self, Float) -> @moonmath.Vec2
+pub fn Arc::start_point(Self) -> @moonmath.Vec2
+
+pub struct Atlas {
+  width : Int32
+  mut height : Int32
+  max_height : Int32
+  mut shelves : Array[Shelf]
+  mut data : Array[Byte]
+  mut occupied : Int32
+}
+pub fn Atlas::alloc(Self, Int32, Int32) -> Region?
+pub fn Atlas::clear(Self) -> Unit
+pub fn Atlas::coverage(Self, Int32, Int32) -> Float
+pub fn Atlas::fullness(Self) -> Float
+pub fn Atlas::height(Self) -> Int32
+pub fn Atlas::new(Int32, Int32, max_height? : Int32) -> Self
+pub fn Atlas::occupied(Self) -> Int32
+pub fn Atlas::width(Self) -> Int32
+pub fn Atlas::write(Self, Region, Mask) -> Unit
+
+#derive(Eq, @debug.Debug)
+pub(all) struct Bounds {
+  min_x : Float
+  min_y : Float
+  max_x : Float
+  max_y : Float
+}
+pub fn Bounds::add_point(Self, @moonmath.Vec2) -> Self
+pub fn Bounds::centre(Self) -> @moonmath.Vec2
+pub fn Bounds::contains(Self, @moonmath.Vec2) -> Bool
+pub fn Bounds::expand(Self, Float) -> Self
+pub fn Bounds::height(Self) -> Float
+pub fn Bounds::intersect(Self, Self) -> Self
+pub fn Bounds::is_empty(Self) -> Bool
+pub fn Bounds::nothing() -> Self
+pub fn Bounds::union(Self, Self) -> Self
+pub fn Bounds::width(Self) -> Float
+
+pub struct Canvas {
+  backend : &Backend
+  mut transform : @moonmath.Affine2
+  mut clip_depth : Int32
+  saved_transforms : Array[@moonmath.Affine2]
+  saved_depths : Array[Int32]
+}
+pub fn Canvas::apply(Self, @moonmath.Affine2) -> Unit
+pub fn Canvas::clear(Self, @moonrgba.Color) -> Unit
+pub fn Canvas::clip(Self, Path, rule? : FillRule, flatten? : Flatten) -> Unit
+pub fn Canvas::device_transform(Self) -> @moonmath.Affine2
+pub fn Canvas::draw_image(Self, @raster.Image, Quad, opacity? : Float) -> Unit
+pub fn Canvas::draw_image_in(Self, @raster.Image, Bounds, opacity? : Float) -> Unit
+pub fn Canvas::fill(Self, Path, Paint, rule? : FillRule, flatten? : Flatten) -> Unit
+pub fn Canvas::fill_circle(Self, @moonmath.Vec2, Float, Paint) -> Unit
+pub fn Canvas::fill_rect(Self, Bounds, Paint) -> Unit
+pub fn Canvas::fill_rounded_rect(Self, Bounds, Corners, Paint) -> Unit
+pub fn Canvas::fill_text(Self, @moonmath.Vec2, StringView, Float, Paint, GlyphCache) -> Float
+pub fn Canvas::flush(Self) -> Unit
+pub fn Canvas::height(Self) -> Int32
+pub fn Canvas::new(&Backend) -> Self
+pub fn Canvas::restore(Self) -> Unit
+pub fn Canvas::rotate(Self, Float) -> Unit
+pub fn Canvas::save(Self) -> Unit
+pub fn Canvas::scale(Self, Float, Float) -> Unit
+pub fn Canvas::stroke_circle(Self, @moonmath.Vec2, Float, Stroke, Paint) -> Unit
+pub fn Canvas::stroke_path(Self, Path, Stroke, Paint, flatten? : Flatten) -> Unit
+pub fn Canvas::stroke_rounded_rect(Self, Bounds, Corners, Stroke, Paint) -> Unit
+pub fn Canvas::translate(Self, Float, Float) -> Unit
+pub fn Canvas::width(Self) -> Int32
+
+#derive(Eq, @debug.Debug)
+pub(all) enum Cap {
+  Butt
+  Round
+  Square
+}
+
+#derive(@debug.Debug)
+pub(all) struct Contour {
+  points : Array[@moonmath.Vec2]
+  closed : Bool
+}
+pub fn Contour::is_closed(Self) -> Bool
+pub fn Contour::length(Self) -> Int32
+pub fn Contour::points(Self) -> Array[@moonmath.Vec2]
+
+#derive(Eq, @debug.Debug)
+pub(all) struct Corners {
+  top_left : Float
+  top_right : Float
+  bottom_right : Float
+  bottom_left : Float
+}
+pub fn Corners::none() -> Self
+pub fn Corners::same(Float) -> Self
+
+pub struct DemoFace {
+  rows : Array[(Char, Array[Int32])]
+}
+pub fn DemoFace::ascent(Self, Float) -> Float
+pub fn DemoFace::descent(Self, Float) -> Float
+pub fn DemoFace::glyph(Self, Char, Float) -> Glyph?
+pub fn DemoFace::new() -> Self
+pub impl GlyphSource for DemoFace
+
+#derive(Eq, @debug.Debug)
+pub(all) enum FillRule {
+  NonZero
+  EvenOdd
+}
+
+#derive(Eq, @debug.Debug)
+pub(all) enum Filter {
+  Nearest
+  Bilinear
+}
+
+#derive(Eq, @debug.Debug)
+pub(all) struct Flatten {
+  tolerance : Float
+}
+pub fn Flatten::new(Float) -> Self
+
+#derive(@debug.Debug)
+pub(all) struct Glyph {
+  mask : Mask
+  left : Int32
+  top : Int32
+  advance : Float
+}
+
+pub struct GlyphCache {
+  source : &GlyphSource
+  atlas : Atlas
+  mut entries : Map[GlyphKey, GlyphEntry]
+  mut clock : Int32
+  mut hits : Int32
+  mut misses : Int32
+  mut resets : Int32
+}
+pub fn GlyphCache::atlas(Self) -> Atlas
+pub fn GlyphCache::entry(Self, Char, Float) -> GlyphEntry?
+pub fn GlyphCache::hits(Self) -> Int32
+pub fn GlyphCache::mask(Self) -> Mask
+pub fn GlyphCache::misses(Self) -> Int32
+pub fn GlyphCache::new(&GlyphSource, width? : Int32, height? : Int32, max_height? : Int32) -> Self
+pub fn GlyphCache::resets(Self) -> Int32
+
+#derive(@debug.Debug)
+pub(all) struct GlyphEntry {
+  region : Region
+  left : Int32
+  top : Int32
+  advance : Float
+  mut used : Int32
+}
+
+#derive(Eq, Hash, @debug.Debug)
+pub(all) struct GlyphKey {
+  code : Int32
+  size : Int32
+}
+
+#derive(@debug.Debug)
+pub(all) struct Gradient {
+  stops : Array[Stop]
+  spread : Spread
+}
+pub fn Gradient::at(Self, Float) -> @moonrgba.Color
+pub fn Gradient::new(Array[Stop], spread? : Spread) -> Self
+pub fn Gradient::two(@moonrgba.Color, @moonrgba.Color) -> Self
+
+pub(all) struct ImagePattern {
+  image : @raster.Image
+  transform : @moonmath.Affine2
+  filter : Filter
+}
+pub impl @debug.Debug for ImagePattern
+
+#derive(Eq, @debug.Debug)
+pub(all) enum Join {
+  Miter
+  Bevel
+  Round
+}
+
+#derive(@debug.Debug)
+pub(all) struct LinearGradient {
+  from : @moonmath.Vec2
+  to : @moonmath.Vec2
+  ramp : Gradient
+}
+
+#derive(Eq, @debug.Debug)
+pub(all) struct Mask {
+  width : Int32
+  height : Int32
+  data : Array[Byte]
+}
+pub fn Mask::at(Self, Int32, Int32) -> Int32
+pub fn Mask::coverage(Self, Int32, Int32) -> Float
+pub fn Mask::height(Self) -> Int32
+pub fn Mask::intersect(Self, Self) -> Self
+pub fn Mask::new(Int32, Int32) -> Self
+pub fn Mask::set(Self, Int32, Int32, Int32) -> Unit
+pub fn Mask::width(Self) -> Int32
+
+pub(all) enum Paint {
+  Solid(@moonrgba.Color)
+  Linear(LinearGradient)
+  Radial(RadialGradient)
+  Texture(ImagePattern)
+}
+pub fn Paint::sample(Self, @moonmath.Vec2) -> (Float, Float, Float, Float)
+pub impl @debug.Debug for Paint
+
+#derive(@debug.Debug)
+pub(all) struct Path {
+  els : Array[PathEl]
+}
+pub fn Path::bounds(Self) -> Bounds
+pub fn Path::builder() -> PathBuilder
+pub fn Path::elements(Self) -> Array[PathEl]
+pub fn Path::flatten(Self, flatten? : Flatten) -> Array[Contour]
+pub fn Path::is_empty(Self) -> Bool
+pub fn Path::new() -> Self
+pub fn Path::transform(Self, @moonmath.Affine2) -> Self
+
+pub struct PathBuilder {
+  els : Array[PathEl]
+  mut current : @moonmath.Vec2
+  mut start : @moonmath.Vec2
+  mut open : Bool
+}
+pub fn PathBuilder::append(Self, Path) -> Self
+pub fn PathBuilder::arc(Self, @moonmath.Vec2, Float, Float, Float) -> Self
+pub fn PathBuilder::arc_to(Self, Float, Float, Float, Bool, Bool, @moonmath.Vec2) -> Self
+pub fn PathBuilder::build(Self) -> Path
+pub fn PathBuilder::circle(Self, @moonmath.Vec2, Float) -> Self
+pub fn PathBuilder::close(Self) -> Self
+pub fn PathBuilder::cubic_to(Self, @moonmath.Vec2, @moonmath.Vec2, @moonmath.Vec2) -> Self
+pub fn PathBuilder::ellipse(Self, @moonmath.Vec2, Float, Float) -> Self
+pub fn PathBuilder::line_to(Self, @moonmath.Vec2) -> Self
+pub fn PathBuilder::move_to(Self, @moonmath.Vec2) -> Self
+pub fn PathBuilder::polyline(Self, Array[@moonmath.Vec2], closed? : Bool) -> Self
+pub fn PathBuilder::quad_to(Self, @moonmath.Vec2, @moonmath.Vec2) -> Self
+pub fn PathBuilder::rect(Self, Bounds) -> Self
+pub fn PathBuilder::rounded_rect(Self, Bounds, Corners) -> Self
+
+#derive(Eq, @debug.Debug)
+pub(all) enum PathEl {
+  MoveTo(@moonmath.Vec2)
+  LineTo(@moonmath.Vec2)
+  QuadTo(@moonmath.Vec2, @moonmath.Vec2)
+  CubicTo(@moonmath.Vec2, @moonmath.Vec2, @moonmath.Vec2)
+  Arc(Arc)
+  Close
+}
+
+#derive(Eq, @debug.Debug)
+pub(all) struct Quad {
+  top_left : @moonmath.Vec2
+  top_right : @moonmath.Vec2
+  bottom_right : @moonmath.Vec2
+  bottom_left : @moonmath.Vec2
+}
+pub fn Quad::bounds(Self) -> Bounds
+pub fn Quad::map(Self, @moonmath.Affine2) -> Self
+pub fn Quad::of_bounds(Bounds) -> Self
+
+#derive(@debug.Debug)
+pub(all) struct RadialGradient {
+  centre : @moonmath.Vec2
+  radius : Float
+  focus : @moonmath.Vec2
+  ramp : Gradient
+  space : @moonmath.Affine2
+}
+
+#derive(Eq, @debug.Debug)
+pub(all) struct Region {
+  x : Int32
+  y : Int32
+  width : Int32
+  height : Int32
+}
+pub fn Region::bounds(Self) -> Bounds
+pub fn Region::is_empty(Self) -> Bool
+
+pub struct Shelf {
+  y : Int32
+  height : Int32
+  mut cursor : Int32
+}
+
+#derive(Eq, @debug.Debug)
+pub(all) enum Spread {
+  Pad
+  Repeat
+  Reflect
+}
+
+#derive(@debug.Debug)
+pub(all) struct Stop {
+  offset : Float
+  color : @moonrgba.Color
+}
+
+#derive(@debug.Debug)
+pub(all) struct Stroke {
+  width : Float
+  join : Join
+  cap : Cap
+  miter_limit : Float
+  dash : Array[Float]
+  dash_offset : Float
+  tolerance : Float
+}
+pub fn Stroke::new(Float) -> Self
+pub fn Stroke::with_cap(Self, Cap) -> Self
+pub fn Stroke::with_dashes(Self, Array[Float], offset? : Float) -> Self
+pub fn Stroke::with_join(Self, Join) -> Self
+pub fn Stroke::with_miter_limit(Self, Float) -> Self
+pub fn Stroke::with_tolerance(Self, Flatten) -> Self
+
+#derive(@debug.Debug)
+pub(all) struct Triangle {
+  a : @moonmath.Vec2
+  b : @moonmath.Vec2
+  c : @moonmath.Vec2
+}
+pub fn Triangle::area(Self) -> Float
+pub fn Triangle::bounds(Self) -> Bounds
 
 // Type aliases
+pub using @moonmath {type Affine2}
+
+pub using @moonmath {type Vec2}
 
 // Traits
+pub(open) trait Backend {
+  fn width(Self) -> Int32
+  fn height(Self) -> Int32
+  fn clear(Self, @moonrgba.Color) -> Unit
+  fn fill_triangles(Self, Array[Triangle], Paint) -> Unit
+  fn fill_mask(Self, Mask, Bounds, Quad, Paint) -> Unit
+  fn draw_image(Self, @raster.Image, Quad, Float) -> Unit
+  fn push_clip(Self, Mask) -> Unit
+  fn pop_clip(Self) -> Unit
+  fn flush(Self) -> Unit
+}
+
+pub(open) trait GlyphSource {
+  fn glyph(Self, Char, Float) -> Glyph?
+  fn ascent(Self, Float) -> Float
+  fn descent(Self, Float) -> Float
+}

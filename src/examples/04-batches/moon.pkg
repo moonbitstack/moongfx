@@ -1,0 +1,9 @@
+// Assembles the vertices and draw calls a GPU backend would upload.
+pkgtype(kind: "executable")
+
+import {
+  "moonbitstack/moongfx",
+  "moonbitstack/moongfx/gpu",
+  "moonbitstack/moonmath",
+  "moonbitstack/moonrgba",
+}
