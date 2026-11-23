@@ -1,0 +1,27 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "moonbitstack/moongfx-integration"
+
+import {
+  "moonbitstack/moongfx/soft",
+}
+
+// Values
+pub fn clip_scene() -> @soft.Surface
+
+pub fn curve_scene() -> @soft.Surface
+
+pub fn fill_scene() -> @soft.Surface
+
+pub fn gradient_scene() -> @soft.Surface
+
+pub fn stroke_scene() -> @soft.Surface
+
+pub fn text_scene() -> @soft.Surface
+
+// Errors
+
+// Types and methods
+
+// Type aliases
+
+// Traits

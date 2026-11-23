@@ -1,0 +1,17 @@
+// The conformance test compares what the software backend draws with the
+// reference images tiny-skia drew for the same scenes. Reading those files needs
+// a file system, so the module only builds where there is one.
+supported_targets = "native"
+
+import {
+  "moonbitlang/core/math",
+  "moonbitstack/moongfx",
+  "moonbitstack/moongfx/soft",
+  "moonbitstack/moonmath",
+  "moonbitstack/moonrgba",
+}
+
+import {
+  "moonbitlang/x/fs",
+  "moonbitstack/moonimage",
+} for "wbtest"

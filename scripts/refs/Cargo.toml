@@ -1,0 +1,7 @@
+[package]
+name = "refs"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+tiny-skia = { version = "0.11", features = ["png-format"] }
