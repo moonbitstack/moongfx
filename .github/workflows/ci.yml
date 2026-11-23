@@ -49,6 +49,12 @@ jobs:
       - name: moon test (all backends)
         run: moon test --target all
 
+      # The reference images are committed; this draws the same six scenes with
+      # the software backend and compares them, so it needs no network and no
+      # renderer beyond this repository.
+      - name: the software backend matches the reference images
+        run: moon test -p moonbitstack/moongfx-integration --target native
+
       - name: examples run
         if: runner.os == 'Linux'
         run: |
