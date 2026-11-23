@@ -32,12 +32,6 @@ fn draw_scene(name : String) -> @soft.Surface raise {
 }
 
 ///|
-/// The reference image tiny-skia drew for a scene.
-fn load_reference(name : String) -> @moonimage.Image raise {
-  load_from(reference_dirs, name)
-}
-
-///|
 /// An image from the first of `dirs` that has one.
 fn load_from(dirs : Array[String], name : String) -> @moonimage.Image raise {
   let mut found : String? = None
