@@ -146,9 +146,9 @@ fn flatten_quad(
     out.push(p2)
     return
   }
-  let a = lerp(p0, p1, 0.5)
-  let b = lerp(p1, p2, 0.5)
-  let middle = lerp(a, b, 0.5)
+  let a = p0.lerp(p1, 0.5)
+  let b = p1.lerp(p2, 0.5)
+  let middle = a.lerp(b, 0.5)
   flatten_quad(p0, a, middle, tolerance, depth + 1, out)
   flatten_quad(middle, b, p2, tolerance, depth + 1, out)
 }
@@ -169,12 +169,12 @@ fn flatten_cubic(
     out.push(p3)
     return
   }
-  let p01 = lerp(p0, p1, 0.5)
-  let p12 = lerp(p1, p2, 0.5)
-  let p23 = lerp(p2, p3, 0.5)
-  let p012 = lerp(p01, p12, 0.5)
-  let p123 = lerp(p12, p23, 0.5)
-  let middle = lerp(p012, p123, 0.5)
+  let p01 = p0.lerp(p1, 0.5)
+  let p12 = p1.lerp(p2, 0.5)
+  let p23 = p2.lerp(p3, 0.5)
+  let p012 = p01.lerp(p12, 0.5)
+  let p123 = p12.lerp(p23, 0.5)
+  let middle = p012.lerp(p123, 0.5)
   flatten_cubic(p0, p01, p012, middle, tolerance, depth + 1, out)
   flatten_cubic(middle, p123, p23, p3, tolerance, depth + 1, out)
 }

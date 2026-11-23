@@ -208,7 +208,7 @@ fn join_at(
     return
   }
   let meet = p + (n1 + n2).scale(half / denominator)
-  let outer = cross(before, after) * side < 0.0
+  let outer = before.cross(after) * side < 0.0
   if !outer {
     if meet.distance(p) > half * 2.0 {
       into.push(p + n1.scale(half))

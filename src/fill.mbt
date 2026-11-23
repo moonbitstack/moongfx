@@ -17,7 +17,7 @@ pub(all) struct Triangle {
 /// The signed area, positive when the corners run anticlockwise in a space whose
 /// y axis points up.
 pub fn Triangle::area(self : Triangle) -> Float {
-  (cross(self.a, self.b) + cross(self.b, self.c) + cross(self.c, self.a)) / 2.0
+  (self.a.cross(self.b) + self.b.cross(self.c) + self.c.cross(self.a)) / 2.0
 }
 
 ///|

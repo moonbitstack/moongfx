@@ -143,27 +143,8 @@ pub fn Bounds::contains(self : Bounds, p : Vec2) -> Bool {
 }
 
 ///|
-/// The scalar product of two points read as position vectors.
-pub fn dot(a : Vec2, b : Vec2) -> Float {
-  a.x * b.x + a.y * b.y
-}
-
-///|
-/// The z component of the cross product: positive when `b` turns anticlockwise
-/// from `a`, negative when it turns clockwise.
-pub fn cross(a : Vec2, b : Vec2) -> Float {
-  a.x * b.y - a.y * b.x
-}
-
-///|
-/// The point `t` of the way from `a` to `b`.
-pub fn lerp(a : Vec2, b : Vec2, t : Float) -> Vec2 {
-  Vec2::new(a.x + (b.x - a.x) * t, a.y + (b.y - a.y) * t)
-}
-
-///|
 /// The squared distance from `p` to the segment `a`–`b`.
-pub fn distance_to_segment_squared(p : Vec2, a : Vec2, b : Vec2) -> Float {
+fn distance_to_segment_squared(p : Vec2, a : Vec2, b : Vec2) -> Float {
   let dx = b.x - a.x
   let dy = b.y - a.y
   let len = dx * dx + dy * dy
@@ -187,6 +168,6 @@ pub fn distance_to_segment_squared(p : Vec2, a : Vec2, b : Vec2) -> Float {
 ///|
 /// Whether `p` is close enough to the line through `a` and `b` to be treated as
 /// lying on it, which is what decides that a curve is flat.
-pub fn off_line(p : Vec2, a : Vec2, b : Vec2, tolerance : Float) -> Bool {
+fn off_line(p : Vec2, a : Vec2, b : Vec2, tolerance : Float) -> Bool {
   distance_to_segment_squared(p, a, b) > tolerance * tolerance
 }

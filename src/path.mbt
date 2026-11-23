@@ -149,7 +149,7 @@ pub fn Path::transform(self : Path, affine : Affine2) -> Path {
   let c1 = affine.linear.c1
   let uniform : Float = c0.length()
   let turn : Float = @math.atan2f(c0.y, c0.x)
-  let mirrored = cross(c0, c1) < 0.0
+  let mirrored = c0.cross(c1) < 0.0
   let mapped = fn(p : Vec2) { affine.transform_point(p) }
   for el in self.els {
     match el {

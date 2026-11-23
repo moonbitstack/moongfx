@@ -11,27 +11,17 @@ import {
 // Values
 pub let coarse : Flatten
 
-pub fn cross(@moonmath.Vec2, @moonmath.Vec2) -> Float
-
-pub fn distance_to_segment_squared(@moonmath.Vec2, @moonmath.Vec2, @moonmath.Vec2) -> Float
-
-pub fn dot(@moonmath.Vec2, @moonmath.Vec2) -> Float
-
 pub fn fill(Path, rule? : FillRule, flatten? : Flatten) -> Array[Triangle]
 
 pub fn fill_contours(Array[Contour], FillRule) -> Array[Triangle]
 
 pub let fine : Flatten
 
-pub fn lerp(@moonmath.Vec2, @moonmath.Vec2, Float) -> @moonmath.Vec2
-
 pub fn linear(@moonmath.Vec2, @moonmath.Vec2, Gradient) -> Paint
 
 pub fn measure_text(GlyphCache, StringView, Float) -> Float
 
 pub fn mix(@moonrgba.Color, @moonrgba.Color, Float) -> @moonrgba.Color
-
-pub fn off_line(@moonmath.Vec2, @moonmath.Vec2, @moonmath.Vec2, Float) -> Bool
 
 pub fn radial(@moonmath.Vec2, Float, Gradient, focus? : @moonmath.Vec2, space? : @moonmath.Affine2) -> Paint
 
