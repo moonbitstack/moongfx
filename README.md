@@ -332,6 +332,8 @@ Six scenes — fills with holes, joins and dashes, gradients, glyphs, clips, cur
 | clip | 0.00014 | 0.20 |
 | curves | 0.00067 | 0.29 |
 
+Two of those scenes — the stroke and the curves — are also drawn by raqote, a rasteriser that shares no code with tiny-skia. Against it the stroke agrees to a mean of 0.0018 and the curves to 0.0015, which is the same order as the two references differ from each other: the drawing sits between two independent implementations rather than matching one of them.
+
 The worst pixel is one on an edge, where the two sides sample differently: this rasteriser takes eight samples down each pixel row where the reference integrates exactly, and a round join is a chain of chords at the stroke's flattening tolerance where the reference draws an arc. The `text` scene agrees to the last bit because the atlas, the blit and the reference all draw the same rectangles.
 
 ## API

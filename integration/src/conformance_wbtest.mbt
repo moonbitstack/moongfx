@@ -10,6 +10,14 @@ let reference_dirs : Array[String] = [
 ]
 
 ///|
+/// Where the second implementation's images are. raqote draws two of the same
+/// scenes; agreeing with two rasterisers that share no code is worth more than
+/// agreeing with one twice.
+let second_dirs : Array[String] = [
+  "integration/refs-raqote", "refs-raqote", "../integration/refs-raqote",
+]
+
+///|
 /// One scene, as the software backend draws it.
 fn draw_scene(name : String) -> @soft.Surface raise {
   match name {
@@ -26,8 +34,14 @@ fn draw_scene(name : String) -> @soft.Surface raise {
 ///|
 /// The reference image tiny-skia drew for a scene.
 fn load_reference(name : String) -> @moonimage.Image raise {
+  load_from(reference_dirs, name)
+}
+
+///|
+/// An image from the first of `dirs` that has one.
+fn load_from(dirs : Array[String], name : String) -> @moonimage.Image raise {
   let mut found : String? = None
-  for dir in reference_dirs {
+  for dir in dirs {
     let path = "\{dir}/\{name}.png"
     if @fs.path_exists(path) {
       found = Some(path)
@@ -36,7 +50,7 @@ fn load_reference(name : String) -> @moonimage.Image raise {
   }
   let path = match found {
     Some(path) => path
-    None => fail("no reference image for \{name} under integration/refs")
+    None => fail("no reference image for \{name}")
   }
   let bytes = @fs.read_file_to_bytes(path)
   @moonimage.decode(bytes)
@@ -119,8 +133,20 @@ fn check(
   worst_limit~ : Double,
   far_limit~ : Double,
 ) -> Unit raise {
+  check_against(name, reference_dirs, mean_limit~, worst_limit~, far_limit~)
+}
+
+///|
+/// The same, against the images in `dirs`.
+fn check_against(
+  name : String,
+  dirs : Array[String],
+  mean_limit~ : Double,
+  worst_limit~ : Double,
+  far_limit~ : Double,
+) -> Unit raise {
   let ours = draw_scene(name)
-  let reference = load_reference(name)
+  let reference = load_from(dirs, name)
   let measured = distance(ours, reference)
   println(
     "\{name}: mean \{measured.mean}, worst \{measured.worst}, far \{measured.far}",
@@ -164,4 +190,26 @@ test "clip agrees with the reference" {
 ///|
 test "curves agree with the reference" {
   check("curves", mean_limit=0.002, worst_limit=0.8, far_limit=0.01)
+}
+
+///|
+test "stroke agrees with a second rasteriser" {
+  check_against(
+    "stroke",
+    second_dirs,
+    mean_limit=0.003,
+    worst_limit=0.8,
+    far_limit=0.02,
+  )
+}
+
+///|
+test "curves agree with a second rasteriser" {
+  check_against(
+    "curves",
+    second_dirs,
+    mean_limit=0.003,
+    worst_limit=0.8,
+    far_limit=0.02,
+  )
 }

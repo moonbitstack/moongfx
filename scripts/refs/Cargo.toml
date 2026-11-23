@@ -3,5 +3,15 @@ name = "refs"
 version = "0.1.0"
 edition = "2021"
 
+[[bin]]
+name = "tiny_skia_refs"
+path = "src/main.rs"
+
+[[bin]]
+name = "raqote_refs"
+path = "src/raqote.rs"
+
 [dependencies]
 tiny-skia = { version = "0.11", features = ["png-format"] }
+raqote = "0.2"
+png = "0.17"
